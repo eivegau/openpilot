@@ -25,7 +25,7 @@ def create_lkas11(packer, frame, CP, apply_steer, steer_req,
     "CF_Lkas_LdwsOpt_USM",
   ]}
   values["CF_Lkas_LdwsSysState"] = sys_state
-  values["CF_Lkas_SysWarning"] = 3 if sys_warning else 0
+  values["CF_Lkas_SysWarning"] = 0
   values["CF_Lkas_LdwsLHWarning"] = left_lane_depart
   values["CF_Lkas_LdwsRHWarning"] = right_lane_depart
   values["CR_Lkas_StrToqReq"] = apply_steer
@@ -38,9 +38,9 @@ def create_lkas11(packer, frame, CP, apply_steer, steer_req,
                            CAR.HYUNDAI_ELANTRA_HEV_2021, CAR.HYUNDAI_SONATA_HYBRID, CAR.HYUNDAI_KONA_EV, CAR.HYUNDAI_KONA_HEV, CAR.HYUNDAI_KONA_EV_2022,
                            CAR.HYUNDAI_SANTA_FE_2022, CAR.KIA_K5_2021, CAR.HYUNDAI_IONIQ_HEV_2022, CAR.HYUNDAI_SANTA_FE_HEV_2022,
                            CAR.HYUNDAI_SANTA_FE_PHEV_2022, CAR.KIA_STINGER_2022, CAR.KIA_K5_HEV_2020, CAR.KIA_CEED,
-                           CAR.HYUNDAI_AZERA_6TH_GEN, CAR.HYUNDAI_AZERA_HEV_6TH_GEN, CAR.HYUNDAI_CUSTIN_1ST_GEN):
+                           CAR.HYUNDAI_AZERA_6TH_GEN, CAR.HYUNDAI_AZERA_HEV_6TH_GEN, CAR.HYUNDAI_CUSTIN_1ST_GEN, CAR.KIA_OPTIMA_G4,):
     values["CF_Lkas_LdwsActivemode"] = int(left_lane) + (int(right_lane) << 1)
-    values["CF_Lkas_LdwsOpt_USM"] = 2
+    values["CF_Lkas_LdwsOpt_USM"] = 1
 
     # FcwOpt_USM 5 = Orange blinking car + lanes
     # FcwOpt_USM 4 = Orange car + lanes
@@ -48,7 +48,7 @@ def create_lkas11(packer, frame, CP, apply_steer, steer_req,
     # FcwOpt_USM 2 = Green car + lanes
     # FcwOpt_USM 1 = White car + lanes
     # FcwOpt_USM 0 = No car + lanes
-    values["CF_Lkas_FcwOpt_USM"] = 2 if enabled else 1
+    values["CF_Lkas_FcwOpt_USM"] = 1 if enabled else 0
 
     # SysWarning 4 = keep hands on wheel
     # SysWarning 5 = keep hands on wheel (red)
@@ -57,7 +57,7 @@ def create_lkas11(packer, frame, CP, apply_steer, steer_req,
     values["CF_Lkas_SysWarning"] = 4 if sys_warning else 0
 
   # Likely cars lacking the ability to show individual lane lines in the dash
-  elif CP.carFingerprint in (CAR.KIA_OPTIMA_G4, CAR.KIA_OPTIMA_G4_FL):
+  elif CP.carFingerprint in (CAR.KIA_OPTIMA_G4_FL):
     # SysWarning 4 = keep hands on wheel + beep
     values["CF_Lkas_SysWarning"] = 4 if sys_warning else 0
 
